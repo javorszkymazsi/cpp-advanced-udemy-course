@@ -3,26 +3,81 @@
 #include <iostream>
 #include <string>
 
+class Person {
+private:
+	std::string name;
+	int age;
+
+public:
+	// default constructor
+	Person() : name(""), age(0)
+	{
+	}
+
+	// copy constructor
+	Person(const Person &other)
+	{
+		name = other.name;
+		age = other.age;
+	}
+
+	// constructor that accepts the parameters
+	Person(std::string name, int age) : 
+		name(name), age(age)
+	{		
+	}
+
+	// it has to const if the key is a class object because keys can't and shouldn't be modified
+	void print() const
+	{
+		std::cout << name << " is " << age << " years old." << std::endl;
+	}
+
+
+	// std::map can't compare two Person keys (it is the map's way of storing data in order), so in order to do that we need to overwrite the < operator
+	// this is the definition of comparing to Person objects
+	bool operator<(const Person &other) const
+	{
+		if (name == other.name)
+		{
+			return age < other.age;
+		}
+		else
+		{
+			// strings can be compared, this is actually done by checking which is before the other in alphabetical order
+			return name < other.name;
+		}		
+	}
+};
+
 int main()
 {
-	std::map<std::string, int> persons;
+	// ----------------------------------------- //
+	//          object as value in a map         //
+	// ----------------------------------------- //
+	std::map<int, Person> people;
 
-	persons["Mike"] = 20;
-	persons["Tina"] = 22;
-	persons["Ben"] = 28;
+	people[34] = Person("Ben", 11);
+	people[42] = Person("Tyron", 56);
+	people[1] = Person("Bilbo", 110);
 
-	if (persons.find("Sue") != persons.end())
+	for (std::map<int, Person>::iterator it = people.begin(); it != people.end(); ++it)
 	{
-		std::cout << "Sue found" << std::endl;
+		it->second.print();
 	}
-	else
-	{
-		std::cout << "Key not found" << std::endl;
-	}
+	std::cout << std::endl;
 
-	for (std::map<std::string, int>::iterator it = persons.begin(); it != persons.end(); ++it)
+	// ----------------------------------------- //
+	//           object as key in a map          //
+	// ----------------------------------------- //
+	std::map<Person, int> folks;
+	folks[Person("Amy", 35)] = 20;
+	folks[Person("Anna", 29)] = 12;
+	folks[Person("Sarah", 49)] = 42;
+
+	for (std::map<Person, int>::iterator it = folks.begin(); it != folks.end(); ++it)
 	{
-		std::cout << it->first << "'s age is " << it->second << std::endl;
+		it->first.print();
 	}
 
     return 0;
