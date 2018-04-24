@@ -80,6 +80,21 @@ int main()
 		it->first.print();
 	}
 
+	// multimaps are used when you have a key more than once in the map. it is used very rarely though
+	std::multimap<int, std::string> names;
+	names.insert(std::make_pair(30, "Mike"));
+	names.insert(std::make_pair(30, "Thomas"));
+	names.insert(std::make_pair(30, "Ben"));
+	names.insert(std::make_pair(29, "Kinga"));
+	names.insert(std::make_pair(29, "Greg"));
+
+	std::pair<std::multimap<int, std::string>::iterator, std::multimap<int, std::string>::iterator> its = names.equal_range(29);
+
+	for (std::multimap<int, std::string>::iterator it = its.first; it != its.second; ++it)
+	{
+		std::cout << it->first << ": " << it->second << std::endl;
+	}
+
     return 0;
 }
 
