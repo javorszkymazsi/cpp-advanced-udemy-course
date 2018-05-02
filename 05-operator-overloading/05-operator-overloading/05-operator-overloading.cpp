@@ -1,6 +1,7 @@
 // 05-operator-overloading.cpp : Defines the entry point for the console application.
 //
 #include "stdafx.h"
+#include "Complex.h"
 
 #include <iostream>
 #include <string>
@@ -59,6 +60,7 @@ int main()
 	Person person3 = person2;
 	person3.print();
 
+	std::cout << std::endl;
 
 	// WHAAAATTT???!!! this is totally valid
 	// Person person3;
@@ -71,6 +73,31 @@ int main()
 	/*person3.operator=(person2);
 	person3.print();*/
 	
+	Complex c1(2, 3);
+	std::cout << c1 << std::endl;
+
+	Complex c2(4, 5);
+	std::cout << c2 << std::endl;
+
+	c2 = c1;
+
+	Complex c3 = c1 + c2;
+	std::cout << c3 << std::endl;
+
+	c3 = c3 + 2;
+	std::cout << c3 << std::endl;
+
+	if (c1 == c2)
+	{
+		std::cout << "These are equal" << std::endl;
+	}
+	else
+	{
+		std::cout << "Nope, not equal" << std::endl;
+	}
+
+	std::cout << *c3 << std::endl;
+
     return 0;
 }
 
